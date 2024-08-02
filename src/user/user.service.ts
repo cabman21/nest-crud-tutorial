@@ -6,18 +6,18 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async create(
     createUserDto: CreateUserDto,
-  ): Promise<UserEntity> {
+  ): Promise<User> {
     const userData =
       await this.userRepository.create(
         createUserDto,
@@ -25,11 +25,11 @@ export class UserService {
     return this.userRepository.save(userData);
   }
 
-  async findAll(): Promise<UserEntity[]> {
+  async findAll(): Promise<User[]> {
     return await this.userRepository.find();
   }
 
-  async findOne(id: number): Promise<UserEntity> {
+  async findOne(id: number): Promise<User> {
     const userData =
       await this.userRepository.findOneBy({ id });
     if (!userData) {
@@ -44,7 +44,7 @@ export class UserService {
   async update(
     id: number,
     updateUserDto: UpdateUserDto,
-  ): Promise<UserEntity> {
+  ): Promise<User> {
     const existingUser = await this.findOne(id);
     const userData = this.userRepository.merge(
       existingUser,
@@ -55,7 +55,7 @@ export class UserService {
     );
   }
 
-  async remove(id: number): Promise<UserEntity> {
+  async remove(id: number): Promise<User> {
     const existingUser = await this.findOne(id);
     return await this.userRepository.remove(
       existingUser,

@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { UserEntity } from './user/entities/user.entity';
+import { User } from './user/entities/user.entity';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -18,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
       port: parseInt(process.env.POSTGRES_PORT),
       password: process.env.POSTGRES_PASSWORD,
       username: process.env.POSTGRES_USER,
-      entities: [UserEntity],
+      entities: [User],
       database: process.env.POSTGRES_DATABASE,
       synchronize: false,
       logging: true,
